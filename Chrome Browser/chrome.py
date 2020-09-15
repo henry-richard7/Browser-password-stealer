@@ -139,17 +139,16 @@ Layout = [[sg.Image(filename="Icons/chrome.png", size=(50, 50)),
                         text_color="white"),
            sg.Multiline("Bookmarks here", size=(45, 25), disabled=True, key="Bookmarks", font=("", 12),
                         text_color="white")],
-          [sg.Button("Get Data", size=(15, 2), font=("", 15), key="Generate_Accounts")]]
+          [sg.Button("Get Data", size=(15, 2), font=("", 15), key="get_data")]]
 
-window = sg.Window('BIN Generator', Layout, element_justification='center')
-window.set_icon("icon_C.ico")
+window = sg.Window('Chrome Decrypter', Layout, element_justification='center')
 
 while True:
     event, values = window.read()
     if event == sg.WIN_CLOSED:
         break
 
-    if event == "Generate_Accounts":
+    if event == "get_data":
         window['Saved_Passwords'].update("")
         window['Saved_CCs'].update("")
         window['Bookmarks'].update("")
