@@ -18,10 +18,14 @@ def ConvertDate(ft):
 
 
 def get_master_key():
-    with open(os.environ['USERPROFILE'] + os.sep + r'AppData\Local\BraveSoftware\Brave-Browser\User Data\Local State',
+    try:
+     with open(os.environ['USERPROFILE'] + os.sep + r'AppData\Local\BraveSoftware\Brave-Browser\User Data\Local State',
               "r", encoding='utf-8') as f:
         local_state = f.read()
         local_state = json.loads(local_state)
+    except:
+        sg.popup("Error","Brave Not Installed")
+        exit()
     master_key = base64.b64decode(local_state["os_crypt"]["encrypted_key"])
     master_key = master_key[5:]  # removing DPAPI
     master_key = win32crypt.CryptUnprotectData(master_key, None, None, None, 0)[1]
