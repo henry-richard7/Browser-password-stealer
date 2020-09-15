@@ -1,0 +1,3 @@
+pypiwin32
+sqlite3
+PySimpleGUI
