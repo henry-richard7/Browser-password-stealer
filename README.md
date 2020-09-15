@@ -10,7 +10,7 @@ To install all the required modules use the following code:
 
 ✔ Chrome<br/>
 ✔ Brave<br/>
-🔒 Edge (Chromium) [To do]
+✔ Edge (Chromium)
 
 # Screenshot
 ![Brave Decrypter](https://user-images.githubusercontent.com/68910039/93196817-bf9c3400-f6ff-11ea-9201-8a15eb419193.png)
