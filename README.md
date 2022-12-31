@@ -7,13 +7,24 @@ To install all the required modules use the following code:
 <b>pip install -r requirements.txt</b>
 
 # Supported browsers
+## Chromium Based Browsers
+    ✔ Amigo<br/>
+    ✔ Torch<br/>
+    ✔ Kometa<br/>
+    ✔ Orbitum<br/>
+    ✔ Cent-browser<br/>
+    ✔ 7star<br/>
+    ✔ Sputnik<br/>
+    ✔ Vivaldi<br/>
+    ✔ Google-chrome-sxs<br/>
+    ✔ Google-chrome<br/>
+    ✔ Epic-privacy-browser<br/>
+    ✔ Microsoft-edge<br/>
+    ✔ Uran<br/>
+    ✔ Yandex<br/>
+    ✔ Brave<br/>
+    ✔ Iridium<br/>
 
-✔ Chrome<br/>
-✔ Brave<br/>
-✔ Edge (Chromium)
-
-# Screenshot
-![Brave Decrypter](https://user-images.githubusercontent.com/68910039/93196817-bf9c3400-f6ff-11ea-9201-8a15eb419193.png)
 
 # 💡Copyrights © [Henry Richard J](https://github.com/henry-richard7)
 
