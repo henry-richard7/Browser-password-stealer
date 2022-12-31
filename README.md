@@ -8,22 +8,22 @@ To install all the required modules use the following code:
 
 # Supported browsers
 ## Chromium Based Browsers
-    ✔ Amigo<br/>
-    ✔ Torch<br/>
-    ✔ Kometa<br/>
-    ✔ Orbitum<br/>
-    ✔ Cent-browser<br/>
-    ✔ 7star<br/>
-    ✔ Sputnik<br/>
-    ✔ Vivaldi<br/>
-    ✔ Google-chrome-sxs<br/>
-    ✔ Google-chrome<br/>
-    ✔ Epic-privacy-browser<br/>
-    ✔ Microsoft-edge<br/>
-    ✔ Uran<br/>
-    ✔ Yandex<br/>
-    ✔ Brave<br/>
-    ✔ Iridium<br/>
+    ✔ Amigo
+    ✔ Torch
+    ✔ Kometa
+    ✔ Orbitum
+    ✔ Cent-browser
+    ✔ 7star
+    ✔ Sputnik
+    ✔ Vivaldi
+    ✔ Google-chrome-sxs
+    ✔ Google-chrome
+    ✔ Epic-privacy-browser
+    ✔ Microsoft-edge
+    ✔ Uran
+    ✔ Yandex
+    ✔ Brave
+    ✔ Iridium
 
 
 # 💡Copyrights © [Henry Richard J](https://github.com/henry-richard7)
