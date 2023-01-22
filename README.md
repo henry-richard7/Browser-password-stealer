@@ -55,4 +55,7 @@ bc1qc6u6qkw9hjttvy3rw6z7saj4sa2scm24dkks3n
 ## Litecoin Address [LTC]
 MNnZSQaTjW8guxdFsSBaWLzuRnhoaDuner
 
+## USDT (Please ensure to select Ethereum (ERC20) network at sender's wallet.)
+0x6bc3be2883a28b95bf9bd23dbd6656c40aa54d7a
+
 #### Star the Repo in case you liked it :)
