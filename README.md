@@ -32,7 +32,7 @@ To install all the required modules use the following code:
 pip install -r requirements.txt
 
 # How to Use
-Just run this chromium_based_browsers.py the code will create a fol;der based on the browser name and stores the saved passwords, credit cards and bookmarks in that folder.
+Just run this **chromium_based_browsers.py** the code will create a folder based on the browser name and stores the saved passwords, credit cards and bookmarks in that folder.
 
 # My Youtube Channel
 [![](https://img.shields.io/badge/Subscribe-red?style=for-the-badge&logo=YouTube)](https://www.youtube.com/channel/UCVGasc5jr45eZUpZNHvbtWQ)
