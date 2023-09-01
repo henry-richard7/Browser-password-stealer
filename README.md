@@ -8,6 +8,7 @@ To install all the required modules use the following code:
 
 # Supported browsers
 ## Chromium Based Browsers
+    ✔ AVAST Browser
     ✔ Amigo
     ✔ Torch
     ✔ Kometa
