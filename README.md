@@ -27,7 +27,7 @@ To install all the required modules use the following code:
     ✔ Iridium
 
 
-# 💡Copyrights © [Henry Richard J](https://github.com/henry-richard7) modified by [Oogaboogaman1231](https://github.com/oogaboogaman1231)
+# 👿 Modified by [Oogaboogaman1231](https://github.com/oogaboogaman1231)
 
 # Install Required Python Packages
 pip install -r requirements.txt
@@ -35,6 +35,4 @@ pip install -r requirements.txt
 # How to Use
 Just run this **chromium_based_browsers.py** the code will create a folder based on the browser name and stores the saved passwords, credit cards and bookmarks in that folder.
 
-# 💡Copyrights © [Henry Richard J](https://github.com/henry-richard7)
-
-#### Star the Repo in case you liked it :)
+# 💡Copyrights © [Henry Richard J](https://github.com/henry-richard7) check him out!
