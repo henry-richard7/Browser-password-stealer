@@ -94,7 +94,7 @@ def decrypt_password(buff: bytes, key: bytes) -> str:
 def save_results(browser_name, type_of_data, content):
     if not os.path.exists(browser_name):
         os.mkdir(browser_name)
-    if content is not None:
+    if content != "":
         open(f'{browser_name}/{type_of_data}.txt', 'w', encoding="utf-8").write(content)
         print(f"\t [*] Saved in {browser_name}/{type_of_data}.txt")
     else:
@@ -106,7 +106,11 @@ def get_data(path: str, profile: str, key, type_of_data):
     if not os.path.exists(db_file):
         return
     result = ""
-    shutil.copy(db_file, 'temp_db')
+    try:
+        shutil.copy(db_file, 'temp_db')
+    except:
+        print(f"Can't access file {type_of_data['file']}")
+        return result
     conn = sqlite3.connect('temp_db')
     cursor = conn.cursor()
     cursor.execute(type_of_data['query'])
@@ -114,7 +118,7 @@ def get_data(path: str, profile: str, key, type_of_data):
         row = list(row)
         if type_of_data['decrypt']:
             for i in range(len(row)):
-                if isinstance(row[i], bytes):
+                if isinstance(row[i], bytes) and row[i]:
                     row[i] = decrypt_password(row[i], key)
         if data_type_name == 'history':
             if row[2] != 0:
@@ -134,7 +138,7 @@ def convert_chrome_time(chrome_time):
 def installed_browsers():
     available = []
     for x in browsers.keys():
-        if os.path.exists(browsers[x]):
+        if os.path.exists(browsers[x] + "\\Local State"):
             available.append(x)
     return available
 
